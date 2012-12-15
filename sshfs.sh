@@ -27,7 +27,8 @@ esac
 
 # decide some names, paths
 host=${hostpath%%:*}
-path=${hostpath#$host:}
+path=${hostpath#$host}
+path=${path#:}
 shorthost=${host%%.*}
 shortpath=$(basename "${path:-home}")
 volname="$shorthost $shortpath"
@@ -52,6 +53,6 @@ transform_symlinks
 
 # create the mountpoint and mount it with sshfs
 mkdir -p "$mountpoint"
-sshfs -o "$(IFS=,; echo "${opts[*]}")" "$hostpath" "$mountpoint"
+sshfs -o "$(IFS=,; echo "${opts[*]}")" "$host:$path" "$mountpoint"
 
 open "$mountpoint"
