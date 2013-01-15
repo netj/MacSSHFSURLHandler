@@ -28,6 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>sshfs</string>
+				<string>sftp</string>
 			</array>
 		</dict>
 	</array>
