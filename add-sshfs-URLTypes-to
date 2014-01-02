@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -eu
+
+Target=$1; shift
+
+{
+    echo 'g/CFBundleURLTypes/,/^<\/array>/ d'
+    echo '/CFBundleSignature/+1 a'
+    echo '<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleURLName</key>
+		<string>SFTP Filesystem</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>sshfs</string>
+			<string>sftp</string>
+		</array>
+	</dict>
+</array>'
+    echo .
+    echo wq
+} | ed "$Target" >/dev/null || true
