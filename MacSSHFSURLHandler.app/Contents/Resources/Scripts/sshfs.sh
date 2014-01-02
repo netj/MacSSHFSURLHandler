@@ -8,7 +8,11 @@
 [ $# -gt 0 ] || { sed -n "2,/^#$/ s/^# //p" <"$0"; exit 2; }
 
 # import environment for sshfs
-PATH=$(source ~/.bashrc && echo "$PATH")
+PATH=$(
+    ! [ -r ~/.bash_profile ] || source ~/.bash_profile
+    ! [ -r ~/.bashrc       ] || source ~/.bashrc
+    echo "$PATH"
+    )
 
 set -eu
 
