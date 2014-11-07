@@ -46,12 +46,27 @@ fi
 opts=(
 volname="$volname"
 auto_cache
-#reconnect
+reconnect
 intr
 transform_symlinks
 #relinksa
 #idmap=user
 #uid=$(id -u)
+
+# do not share connections
+ControlMaster=no
+ControlPath=none
+
+# use lighter Ciphers and MACs for faster transfers
+# See: http://blog.famzah.net/2010/06/11/openssh-ciphers-performance-benchmark/
+# See: http://www.damtp.cam.ac.uk/user/ejb48/sshspeedtests.html
+# See: https://bbs.archlinux.org/viewtopic.php?id=9107
+#Ciphers='arcfour256\,arcfour128\,arcfour\,blowfish-cbc'
+#MACs='umac-64@openssh.com\,hmac-md5\,hmac-md5-96\,hmac-sha1'
+# osxfuse does not handle escaping comma well
+Ciphers='arcfour256'
+MACs='umac-64@openssh.com'
+
 "$@"
 )
 
